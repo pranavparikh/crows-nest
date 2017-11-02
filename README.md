@@ -18,7 +18,7 @@ By launching sauce tunnels in high availability mode with crows-nest, you won't 
  
 ## Media
 
-* [Building a Better Wormhole](https://youtu.be/GNJJF9w4-2c): A presentation about crows-nest at SauceCon 2017
+* **Building a Better Wormhole**: A presentation about crows-nest at SauceCon 2017 ([video](https://youtu.be/GNJJF9w4-2c), [slides](https://www.slideshare.net/saucelabs/building-a-better-wormhole))
 
 ## Usage
 
