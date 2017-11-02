@@ -15,6 +15,10 @@ By launching sauce tunnels in high availability mode with crows-nest, you won't 
  1. manually check the availability of each tunnel
  2. manually launch up new tunnels to replace the dead ones
  3. manually and periodically restart all tunnels
+ 
+## Media
+
+* [Building a Better Wormhole](https://youtu.be/GNJJF9w4-2c): A presentation about crows-nest at SauceCon 2017
 
 ## Usage
 
