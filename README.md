@@ -109,7 +109,7 @@ Start one sauce tunnel in high availability mode:
 
 With rolling restart feature:
 ```bash
-SAUCE_USERNAME=xxx SAUCE_ACCESS_KEY=yyy ./bin/supervise --tunnels 1 --rollingRestart
+SAUCE_CONNECT_VERSION=z.z.z SAUCE_USERNAME=xxx SAUCE_ACCESS_KEY=yyy ./bin/supervise --tunnels 1 --rollingRestart
 ```
 
 ### Advanced usage
