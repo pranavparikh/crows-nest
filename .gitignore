@@ -3,5 +3,5 @@ nohup.out
 temp
 
 .vscode
-dist
+lib
 coverage

@@ -1,38 +1,35 @@
-"use strict";
+'use strict';
 
-import Promise from "bluebird";
-import _ from "lodash";
-import EventEmitter from "events";
-import util from "util";
-import os from "os";
+const _ = require('lodash');
+const EventEmitter = require('events');
+const os = require('os');
 
-import logger from "./logger";
-import Factory from "./stats/factory";
+const Factory = require('./stats/factory');
 
-export const EVENT = {
-  TUNNEL_STATUS: "status",
+const EVENT = {
+  TUNNEL_STATUS: 'status',
   // How many connection attempts a tunnel has been made before failing
-  TUNNEL_FAILED: "failed",
+  TUNNEL_FAILED: 'failed',
   // How many connection attempts a tunnel has been made for now 
-  TUNNEL_RETRYING: "retrying",
+  TUNNEL_RETRYING: 'retrying',
   // How many attempts a tunnel has been made to successfully connect
-  TUNNEL_CONNECTED: "connected",
+  TUNNEL_CONNECTED: 'connected',
   // When a tunnel successfully stopped
-  TUNNEL_STOPPED: "stopped",
+  TUNNEL_STOPPED: 'stopped',
   // How long a tunnel run (unix timestamp)
-  TUNNEL_AGE: "age",
+  TUNNEL_AGE: 'age',
   // How long a tunnel takes to successfully connect
-  TUNNEL_BUILD_CONNECTITON: "connectcost"
+  TUNNEL_BUILD_CONNECTITON: 'connectcost'
 };
 
-export class StatsQueue {
+class StatsQueue {
   constructor(options) {
     this.statsQueue = this.build();
 
     this.statsSwitch = options.statsSwitch;
     this.statsPrefix = options.statsPrefix;
 
-    this.statsClient = options.statsClient ? options.statsClient : new Factory(options.statsType, _.omit(options, "statsSwitch"));
+    this.statsClient = options.statsClient ? options.statsClient : new Factory(options.statsType, _.omit(options, 'statsSwitch'));
 
   }
 
@@ -54,10 +51,16 @@ export class StatsQueue {
         tempQueue.push(self._generateStats(v2.event));
       });
     });
-    
+
     return Promise
       .all(tempQueue)
       .then(() => {
+        // reset statsQueue
+        self.statsQueue = self.build();
+        return Promise.resolve();
+      })
+      .catch((err) => {
+        // we eat every error
         // reset statsQueue
         self.statsQueue = self.build();
         return Promise.resolve();
@@ -101,17 +104,16 @@ export class StatsQueue {
         };
       }
     }
-    return Promise.resolve();
   }
 
   _generateStats({ eventType, timestamp, tunnelIndex, data }) {
     let self = this;
 
     return new Promise((resolve, reject) => {
-      let key = util.format("%s%s", self.statsPrefix, eventType);
+      let key = `${self.statsPrefix}${eventType}`;
 
       self.statsClient
-        .gauge(key, timestamp, data, ["hostname:" + os.hostname(), "tunnelNum:" + tunnelIndex])
+        .gauge(key, timestamp, data, [`hostname:${os.hostname()}`, `tunnelNum:${tunnelIndex}`])
         .then(() => {
           // we eat all errors here as some of the clients use UDP
           resolve();
@@ -119,4 +121,9 @@ export class StatsQueue {
 
     });
   }
+};
+
+module.exports = {
+  EVENT,
+  StatsQueue
 };

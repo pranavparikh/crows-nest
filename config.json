@@ -9,7 +9,7 @@
     "sharedTunnel": true
   },
   "supervisor": {
-    "portStart": 4000,
+    "portStart": 5000,
     "portIndent": 5
   },
   "stats": {
@@ -19,5 +19,5 @@
     "statsPrefix": "testdddtest.",
     "statsDatabase": ""
   },
-  "restartCron": "0 3 * * *"
+  "restartCron": "*/5 * * * *"
 }

@@ -22,11 +22,10 @@ By launching sauce tunnels in high availability mode with crows-nest, you won't 
 
 ## Usage
 
-### How to Build
+### Prerequisites
 
-Since Crows-nest is coded in ES6, you need to compile before running it in your nodejs env. To compile, run following commands in the repo root
- 1. `npm install`
- 2. `npm run build`
+1. `crows-nest@1.6.0` and above requires **node@6** and above.
+2. `npm install` to install.
 
 ### Configuration
 
@@ -59,6 +58,8 @@ Since Crows-nest is coded in ES6, you need to compile before running it in your 
 ```
 
 `./config.json` file has the basic configurations that are required by Sauce Connect. 
+
+> Please note: since `saucelabs-connect@4.4.x`, waitTunnelShutdown is removed from configuration.
 
 #### Tunnel config
 
@@ -156,77 +157,13 @@ To stop:
 
 ### Architecture
 
-```
-+---------------------------------------------------------------------+         +-----------------+
-|                                                                     |         |                 |
-| Crows-nest                           +---------------------------+  |         | Saucelabs       |
-|                                      |          +----------------|  |         |                 |
-|                                      | Tunnel 1 | Sauce Tunnel  ||  |         | Sauce Tunnel    |
-|                              +-----> |          | Child Process || +--------> | Proxy Cloud     |
-|                              |       |          +----------------|  |         |                 |
-|                              |       +---------------------------+  |         |                 |
-|                              |                                      |         |                 |
-|                              |                                      |         |                 |
-|                              |                                      |         |                 |
-|                              |       +---------------------------+  |         |                 |
-|                              |       |          +----------------|  |         |                 |
-| +-----------------+          |       | Tunnel 2 | Sauce Tunnel  ||  |         |                 |
-| |                 |          +-----> |          | Child Process || +--------> |                 |
-| | Supervisor      +----------+       |          +----------------|  |         |                 |
-| |                 |          |       +---------------------------+  |         |                 |
-| +-----------------+          |                                      |         |                 |
-|                              |                      .               |         |                 |
-|                              |                      .               |         |                 |
-|                              |                      .               |         |                 |
-|                              |                      .               |         |                 |
-|                              |                                      |         |                 |
-|                              |       +---------------------------+  |         |                 |
-|                              |       |          +----------------|  |         |                 |
-|                              |       | Tunnel n | Sauce Tunnel  ||  |         |                 |
-|                              +-----> |          | Child Process || +--------> |                 |
-|                                      |          +----------------|  |         |                 |
-|                                      +---------------------------|  |         |                 |
-+---------------------------------------------------------------------+         +-----------------+
-```
+![crows-nest architecture](./crows-nest.architecture.png "crows-nest architecture")
 
 ### Components
 
 There are two major components in Crows-nest, **[Supervisor](https://github.com/TestArmada/crows-nest/blob/master/lib/supervisor.js)** and **[Tunnel](https://github.com/TestArmada/crows-nest/blob/master/lib/tunnel.js)**
-```
 
- +------------+                            +---------+
- | Supervisor |                            | Tunnels |
- +-----+------+                            +----+----+
-       |                                        |
-      +++                                       |
-      | |                                      +++
-      | | Initialize()                         | |
-      | +------------------------------------> | | monitor()
-      | |                                      | +------------+
-      +++                                      | |            |
-       |                                       | | <----------+
-       |                                       +++
-       |                                        |
-       |                                        |
-      +++                                       |
-      | | scheduleRestart()                    +++
-      | +------------------------------------> | | stop()
-      | |                                      | +------------+
-      | |                                      | |            |
-      | |                                      | |            |
-      | |                                      | | <----------+
-      | |                                      | |
-      | |                                      | | start()
-      | |                                      | +------------+
-      | |                                      | |            |
-      | |                                      | |            |
-      | |                                      | | <----------+
-      +++                                      +++
-       |                                        |
-       |                                        |
-       +                                        +
-
-```
+![crows-nest components](./crows-nest.components.png "crows-nest components")
 
 #### Tunnel
 

@@ -1,16 +1,16 @@
-"use strict";
+'use strict';
 
-import { InfluxDB } from "influx";
-import moment from "moment";
-import _ from "lodash";
-import Base from "./base";
-import logger from "../logger";
+const InfluxDB = require('influx').InfluxDB;
+const moment = require('moment');
+const _ = require('lodash');
+const Base = require('./base');
+const logger = require('testarmada-logger');
 
 /* istanbul ignore next */
-export default class InfluxDBAdaptor extends Base {
-  constructor({statsHost, statsPort, statsDatabase}) {
+class InfluxDBAdaptor extends Base {
+  constructor({ statsHost, statsPort, statsDatabase }) {
     super();
-    
+
     this.influx = new InfluxDB({
       host: statsHost,
       port: statsPort,
@@ -20,10 +20,11 @@ export default class InfluxDBAdaptor extends Base {
 
   gauge(key, timestamp, data, tags, callback) {
     // data mapping and format
+    logger.prefix = 'Crows Nest';
 
     let d = {
       measurement: key,
-      tags: _.fromPairs(_.map(tags, (t) => t.split(":"))),
+      tags: _.fromPairs(_.map(tags, (t) => t.split(':'))),
       fields: { duration: timestamp, value: data },
     };
     logger.debug(JSON.stringify(d));
@@ -31,3 +32,5 @@ export default class InfluxDBAdaptor extends Base {
     return this.influx.writePoints([d]);
   }
 };
+
+module.exports = InfluxDBAdaptor;
