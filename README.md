@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/TestArmada/crows-nest/branch/master/graph/badge.svg)](https://codecov.io/gh/TestArmada/crows-nest)
 
-A supervisor tool to launch and monitor multiple SauceLabs Sauce Connect tunnel in [high availability mode](https://wiki.saucelabs.com/display/DOCS/High+Availability+Sauce+Connect+Setup).
+A supervisor tool to launch and monitor multiple SauceLabs Sauce Connect tunnel in [high availability mode](https://wiki.saucelabs.com/display/DOCS/High+Availability+Sauce+Connect+Setup) or TestObject tunnel in non high availability mode due to [real device testing limitations](https://wiki.saucelabs.com/display/DOCS/Sauce+Connect+Proxy+and+Real+Device+Testing).
 
 The tool tracks the availability of each tunnel. If any of the tunnels is unresponsive, the supervisor will attempt to terminate the tunnel gracefully and start a new one. Additionally, the tool provides the ability to perform "rolling restarts" all the tunnels periodically to avoid known issues with long-running tunnel processes.
 
@@ -73,6 +73,28 @@ You can set `tunnel.username` and `tunnel.accessKey` using one of the following 
  
  1. Specifying the values in `./config.json`
  2. Setting the environment variable `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY`
+ 
+ ##### TestObject tunnel config
+ 
+ If need run TestObject tunnels, you need config your `tunnel` part in `config.json` like:
+ 
+ ```
+ "tunnel": {
+    "username": "",
+    "accessKey": "",
+    "verbose": false,
+    "proxy": null,
+    "tunnelIdentifier": "",
+    "noRemoveCollidingTunnels": false,
+    "sharedTunnel": true,
+    "restUrl": "https://us1.api.testobject.com/sc/rest/v1",
+    "noSslBumpDomains": "all"
+ }
+ ```
+ 
+ The `username` is your TestObject account username, and `accessKey` is the TestObject API key, which located at your `TestObject app -> AUTOMATED TESTING -> Setup Instruction`.
+ 
+ `"restUrl": "https://us1.api.testobject.com/sc/rest/v1"` is TestObject US data center url, `"noRemoveCollidingTunnels": false` and `"noSslBumpDomains": "all"` related to [real device testing limitations](https://wiki.saucelabs.com/display/DOCS/Sauce+Connect+Proxy+and+Real+Device+Testing) that Sauce Connect Proxy for real device testing do have SSL certificates issue and not able to use a [High Availability Sauce Connect Proxy Setup](https://wiki.saucelabs.com/display/DOCS/High+Availability+Sauce+Connect+Proxy+Setup).
 
 #### Supervisor config
 
