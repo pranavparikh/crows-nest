@@ -25,7 +25,7 @@
   "dependencies": {
     "cli-color": "^1.1.0",
     "co": "^4.6.0",
-    "hot-shots": "^4.3.1",
+    "hot-shots": "^5.0.1",
     "influx": "^5.0.0-alpha.4",
     "lodash": "^4.15.0",
     "moment": "^2.15.0",
