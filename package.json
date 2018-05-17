@@ -31,7 +31,7 @@
     "moment": "^2.15.0",
     "node-schedule": "^1.1.1",
     "once": "^1.4.0",
-    "pm2": "^2.0.12",
+    "pm2": "^2.10.4",
     "sauce-connect-launcher": "^1.1.0",
     "saucelabs": "^1.3.0",
     "testarmada-logger": "^1.1.1",
