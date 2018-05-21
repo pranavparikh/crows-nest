@@ -1,0 +1,32 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "import/no-extraneous-dependencies": [
+      0,
+      {
+        "devDependencies": true
+      }
+    ],
+    "comma-dangle": [
+      "error",
+      "only-multiline"
+    ],
+    "jsx-a11y/href-no-hash": "off",
+    "object-curly-newline": [
+      "error",
+      {
+        "consistent": true
+      }
+    ]
+  },
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "fail": true
+  }
+}
