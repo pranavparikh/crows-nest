@@ -5,7 +5,7 @@ const { promisify } = require('util');
 
 const config = require('../../config');
 
-logger.prefix = 'Monitor';
+logger.prefix = 'monitor';
 
 const parseData = tunnels => {
   try {
@@ -44,8 +44,12 @@ const heartbeat = (tunnel, interval) => {
       if (!foundTunnel) {
         logger.log(`The tunnel ${tunnelId} is not active on Sauce Labs.  Reset the tunnel`);
 
-        // if there is an exitCode, that means the process has already
-        // been terminated and the sauce connect tunnel is closed
+        // If there is an exitCode, that means the process has already
+        // been terminated and the sauce connect tunnel is closed.  This should
+        // only hapen in odd, edge, cases because we are attaching to the `.end`
+        // event on the sauce connect object.  That should fire when the tunnel
+        // is closed from either Sauce Labs or the running crows-nest process.
+        // This is mostly a 'safety net'.
         if (tunnel.connection.exitCode || tunnel.connection.exitCode === 0) {
           logger.log('The tunnel has already been closed.  Exit process.');
           process.exit(1);
