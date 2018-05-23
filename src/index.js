@@ -1,9 +1,9 @@
 const logger = require('testarmada-logger');
 
-const config = require('../config');
+const config = require('./config');
 const gracefulShutdown = require('./components/graceful-shutdown');
 const { heartbeat } = require('./components/monitor');
-const Tunnel = require('./tunnel');
+const Tunnel = require('./components/tunnel');
 
 logger.prefix = 'crows-nest';
 
