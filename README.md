@@ -1,8 +1,8 @@
-# crows-nest v2.x
-crows-nest creates a Sauce Connect Tunnel and then manages if it is active or not.  Running crows-nest next to `lookout` will ensure the integrity of your Sauce Connect Tunnels.
+# ravens
+ravens creates a Sauce Connect Tunnel and then manages if it is active or not.  Running ravens next to `lookout` will ensure the integrity of your Sauce Connect Tunnels.
 
 ### Evironment variables needed
-    // The first 5 variables are specific to the crows-nest application behavior
+    // The first 5 variables are specific to the ravens application behavior
     // The rest are specific to the Sauce Connect Connection
     
     // This is the directory to store the active-tunnels.json file
@@ -31,7 +31,7 @@ crows-nest creates a Sauce Connect Tunnel and then manages if it is active or no
     // Allows sub-accounts of the tunnel owner to use the tunnel
     SHARED_TUNNEL: true,
     // Identity the tunnel for concurrent tunnels (optional)
-    TUNNEL_IDENTIFIER: 'crows-nest-tunnel-id',
+    TUNNEL_IDENTIFIER: 'ravens-tunnel-id',
     // Log output from the `sc` process to stdout?
     VERBOSE: false,
     // retry to establish a tunnel multiple times. (optional)

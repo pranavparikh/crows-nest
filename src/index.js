@@ -5,7 +5,7 @@ const gracefulShutdown = require('./components/graceful-shutdown');
 const { heartbeat } = require('./components/monitor');
 const Tunnel = require('./components/tunnel');
 
-logger.prefix = 'crows-nest';
+logger.prefix = 'ravens';
 
 const start = async () => {
   try {
