@@ -16,7 +16,7 @@ const parseData = tunnels => {
   try {
     return JSON.parse(tunnels);
   } catch (error) {
-    logger.err('Failed to parse data', error);
+    logger.err(`Failed to parse data ${error}`);
     throw error;
   }
 };
@@ -29,7 +29,7 @@ const getActiveTunnels = async () => {
     logger.debug('Active tunnels:', tunnels);
     return parseData(tunnels) || [];
   } catch (error) {
-    logger.err('Failed to get active tunnels', error);
+    logger.err(`Failed to get active tunnels ${error}`);
     return [];
   }
 };

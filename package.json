@@ -1,17 +1,17 @@
 {
-  "name": "testarmada-crows-nest",
-  "version": "1.6.0",
-  "description": "supervise sauce tunnels, restart one if dies",
+  "name": "crows-nest",
+  "version": "1.0.0",
+  "description": "Create sauce connect tunnel and monitors it",
   "scripts": {
-    "test": "./node_modules/.bin/mocha",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive test",
-    "upload-coverage": "./node_modules/.bin/codecov --root=./"
+    "test": "NODE_ENV=test jest --silent",
+    "test:watch": "NODE_ENV=test jest --watchAll --silent",
+    "coverage": "NODE_ENV=test jest --coverage --silent"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:TestArmada/crows-nest.git"
+    "url": "https://gecgithub01.walmart.com/otto/crows-nest.git"
   },
-  "author": "Lei Zhu <thunderzhulei@gmail.com>",
+  "author": "Shane Chapman",
   "license": "MIT",
   "keywords": [
     "saucelabs",

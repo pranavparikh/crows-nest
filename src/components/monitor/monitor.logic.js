@@ -1,6 +1,7 @@
 const logger = require('testarmada-logger');
 
 const retrieval = require('./active-tunnels-retrieval');
+const shutdown = require('../shutdown');
 
 logger.prefix = 'monitor';
 
@@ -26,18 +27,18 @@ const heartBeatInterval = async tunnel => {
       // This is mostly a 'safety net'.
       if (tunnel.connection.exitCode || tunnel.connection.exitCode === 0) {
         logger.log('The tunnel has already been closed.  Exit process.');
-        process.exit(1);
+        shutdown(process);
       } else {
         await tunnel.disconnect();
         logger.log('Successfully disconnected tunnel.  Exit process');
-        process.exit(1);
+        shutdown(process);
       }
     }
 
     logger.log('The tunnel is still active with Sauce Labs');
   } catch (error) {
     logger.err('Failed to interval check for active tunnels', error);
-    process.exit(1);
+    shutdown(process);
   }
 };
 
@@ -46,10 +47,10 @@ const restartInterval = async tunnel => {
     logger.log('Restarting tunnel because of daily restart');
     await tunnel.disconnect();
     logger.log('Successfully disconnected tunnel. Shut down process');
-    process.exit(1);
+    shutdown(process);
   } catch (error) {
     logger.err('Failed to disconnect tunnel.  Shut down process', error);
-    process.exit(1);
+    shutdown(process);
   }
 };
 

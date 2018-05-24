@@ -31,6 +31,7 @@ Tunnel.prototype.connect = async function connect() {
 Tunnel.prototype.disconnect = async function disconnect() {
   try {
     logger.log(`Disconnecting sauce connect tunnel ${this.connection.tunnelId}`);
+    logger.log(JSON.stringify(this.connection));
     const connectionCloseAsync = promisify(this.connection.close);
     await connectionCloseAsync();
     logger.log('Successfully disconnected sauce connect tunnel');
